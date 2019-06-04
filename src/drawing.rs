@@ -2,6 +2,7 @@ use gl;
 use gl::types::*;
 
 use std::ptr;
+use std::os::raw::c_void;
 
 use super::enums;
 
@@ -55,10 +56,9 @@ pub fn draw_arrays(primitive: enums::Primitive, first: GLint, count: GLsizei) {
 /// ```
 ///
 /// More: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
-/// TODO: ptr thing
-pub fn draw_elements(primitive: enums::Primitive, count: GLsizei, type_: enums::Type) {
+pub fn draw_elements(primitive: enums::Primitive, count: GLsizei, type_: enums::Type, elements: *const GLuint) {
     unsafe {
-        gl::DrawElements(primitive as GLenum, count, type_ as GLenum, ptr::null());
+        gl::DrawElements(primitive as GLenum, count, type_ as GLenum, elements as *const c_void);
     }
 }
 
